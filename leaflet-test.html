@@ -39,6 +39,10 @@ var circle = L.circle([51.508, -0.11], {
     radius: 500
 }).addTo(mymap);
 
+marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+circle.bindPopup("I am a circle.");
+polygon.bindPopup("I am a polygon.");
+
 </script>
 
 </body>
