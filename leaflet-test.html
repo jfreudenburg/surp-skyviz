@@ -18,7 +18,7 @@
 <p>Hello world! How's it going.</p>
 
 <p>Here's a map:</p>
-<div id="mapid", style="height: 200px"></div>
+<div id="mapid", style="height: 500px"></div>
 <script>
     var mymap = L.map('mapid').setView([51.505, -0.09], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -29,6 +29,16 @@
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiamZyZXVkZW5idXJnIiwiYSI6ImNrcGU3emJqdzA3cWIydmxlYnJ2b2hscm0ifQ.3Lba9xGqZnYo1fmbAF2udw'
 }).addTo(mymap);
+
+var marker = L.marker([51.5, -0.09]).addTo(mymap);
+
+var circle = L.circle([51.508, -0.11], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(mymap);
+
 </script>
 
 </body>
