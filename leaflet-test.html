@@ -45,5 +45,43 @@ polygon.bindPopup("I am a polygon.");
 
 </script>
 
+<p>Here's another map:</p>
+<!-- layer groups experimentations -->
+<div id="map2", style="height: 500px"></div>
+
+<script>
+    // create each marker
+    var toronto = L.marker([43.65, -79.38]).bindPopup('This is Toronto, ON.'),
+        miss = L.marker([43.59, -79.64]).bindPopup('This is Mississaga, ON.'),
+        london = L.marker([51.51, -0.13]).bindPopup('This is London.'),
+        greenwhich = L.marker([51.49, 0.01]).bindPopup('This is Greenwhich.');
+
+    // combine into a layer
+    // this layer is an overlay, which means it can be added on top of other layers
+    var cities = L.layerGroup([toronto, miss, london, greenwhich]);
+
+    // <grayscale> and <streets> are base layers and mutually exclusive; only one can be viewed 
+    var grayscale = L.tileLayer(mapboxUrl, {id: 'MapID', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution}),
+        streets   = L.tileLayer(mapboxUrl, {id: 'MapID', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution});
+
+    var map = L.map('map2', {
+        center: [43.6, -79.5],
+        zoom: 10,
+        layers: [grayscale, cities]
+    });
+
+    var baseMaps = {
+    "Grayscale": grayscale,
+    "Streets": streets
+    };
+
+    var overlayMaps = {
+        "Cities": cities
+    };
+
+    L.control.layers(baseMaps, overlayMaps).addTo(map); // if you didn't have base maps or overlays, you can pass in null instead
+
+</script>
+
 </body>
 </html>
