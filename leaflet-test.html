@@ -49,7 +49,7 @@ circle.bindPopup("I am a circle.");
 </script>
 
 <p>Here's another map:</p>
-<!-- layer groups experimentations -->
+<!-- ---------layer groups experimentations------------ -->
 <div id="map2", style="height: 500px"></div>
 
 <script>
@@ -97,6 +97,96 @@ circle.bindPopup("I am a circle.");
     };
 
     L.control.layers(baseMaps, overlayMaps).addTo(map); // if you didn't have base maps or overlays, you can pass in null instead
+
+</script>
+
+<!-- --------------non-geographical maps experiments----------- -->
+<p>Here's another map, this one not of Earth: </p>
+<div id="map3", style="height: 400px; width: 500px"></div>
+<script>
+    var map3 = L.map('map3', {
+    crs: L.CRS.Simple, // simple square grid
+    minZoom: -5
+    });
+
+    var bounds = [[-26.5,-25], [1021.5,1023]]; // points at which 
+    var image = L.imageOverlay('uqm_map_full.png', bounds).addTo(map3);
+    map3.fitBounds(bounds);
+
+    var sol = L.latLng([ 145, 175.2 ]); // geographical point with given longitude and latitude
+    // Coordinates in CRS.Simple take the form of [y, x] instead of [x, y], in the same way Leaflet uses [lat, lng] instead of [lng, lat].
+    L.marker(sol).addTo(map3);
+    map3.setView( [70, 120], 1);
+
+    // if the [y, x] situation is annoying, here's a wrapper that would switch them
+        var yx = L.latLng;
+
+    var xy = function(x, y) {
+        if (L.Util.isArray(x)) {    // When doing xy([x, y]);
+            return yx(x[1], x[0]);
+        }
+        return yx(y, x);  // When doing xy(x, y);
+    };
+
+    // Now we can put in stuff in [x, y] 
+    var sol      = xy(175.2, 145.0);
+    var mizar    = xy( 41.6, 130.1);
+    var kruegerZ = xy( 13.4,  56.5);
+    var deneb    = xy(218.7,   8.3);
+
+    L.marker(     sol).addTo(map3).bindPopup(      'Sol');
+    L.marker(   mizar).addTo(map3).bindPopup(    'Mizar');
+    L.marker(kruegerZ).addTo(map3).bindPopup('Krueger-Z');
+    L.marker(   deneb).addTo(map3).bindPopup(    'Deneb');
+
+    var travel = L.polyline([sol, deneb]).addTo(map3);
+
+</script>
+
+<!-----------------trying with 2MASS Redshift Survey------------>
+<p>Here we try to show the 2MASS Redshift Survey as a map:</p>
+<div id="2MRSmap", style="height: 550px; width: 900px"></div>
+<script>
+    var MRSmap = L.map('2MRSmap', {
+    crs: L.CRS.Simple, // simple square grid, need to finure out some curvy grid
+    minZoom: -5,
+    layers: background
+    });
+
+    var bounds = [[-100, -195], [100, 195]]; 
+    var background = L.imageOverlay('./2MASS_images/LongLat_projected.png', bounds).addTo(MRSmap);
+    MRSmap.fitBounds(bounds);
+
+    var LayerBounds = [[-92, -185], [92, 185]];
+    var l1 = L.imageOverlay('./2MASS_images/2MRS.0_z_0.01.smooth.png', LayerBounds);
+    var l2 = L.imageOverlay('./2MASS_images/2MRS.0.01_z_0.02.smooth.png', LayerBounds);
+    var l3 = L.imageOverlay('./2MASS_images/2MRS.0.02_z_0.03.smooth.png', LayerBounds);
+    var l4 = L.imageOverlay('./2MASS_images/2MRS.0.03_z_0.04.smooth.png', LayerBounds);
+    var l5 = L.imageOverlay('./2MASS_images/2MRS.0.04_z_0.05.smooth.png', LayerBounds);
+    var l6 = L.imageOverlay('./2MASS_images/2MRS.0.05_z_0.06.smooth.png', LayerBounds);
+    var l7 = L.imageOverlay('./2MASS_images/2MRS.0.06_z_0.07.smooth.png', LayerBounds);
+    var l8 = L.imageOverlay('./2MASS_images/2MRS.0.07_z_0.08.smooth.png', LayerBounds);
+    var l9 = L.imageOverlay('./2MASS_images/2MRS.0.08_z_0.09.smooth.png', LayerBounds);
+
+    var redshiftLayers = {
+        "blank": background,
+        "0.00 < z < 0.01": l1,
+        "0.01 < z < 0.02": l2,
+        "0.02 < z < 0.03": l3,
+        "0.03 < z < 0.04": l4,
+        "0.04 < z < 0.05": l5,
+        "0.05 < z < 0.06": l6,
+        "0.06 < z < 0.07": l7,
+        "0.07 < z < 0.08": l8,
+        "0.08 < z < 0.09": l9
+    };
+
+    L.control.layers(redshiftLayers, null).addTo(MRSmap);
+    MRSmap.setView( [0, 0], 1.25);
+
+    L.marker(L.latLng(90, 0)).addTo(MRSmap).bindPopup('supposed to be at x: 0, y: 90');
+    L.marker(L.latLng(20, 50)).addTo(MRSmap).bindPopup('supposed to be at x: 50, y: 20');
+    L.marker(L.latLng(-60, -30)).addTo(MRSmap).bindPopup('supposed to be at x: -30, y: -60');
 
 </script>
 
