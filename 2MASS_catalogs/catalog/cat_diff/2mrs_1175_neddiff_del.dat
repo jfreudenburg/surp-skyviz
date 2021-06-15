@@ -1,0 +1,13 @@
+# The 2MASS Redshift Survey
+# Huchra et al., ApJS, in press
+#
+# http://tdc-www.harvard.edu/2mrs/
+# catalog version 2.4, 2011 Dec 16
+# maintained by Lucas Macri, lmacri@tamu.edu
+#
+# Erroneous NED entries which were not used; no other redshift in literature
+#
+#2MASS_ID        NED_ID                         RA          DEC               NED_CZ      NED_BIBCODE         COMMENT
+03212772+4048059|UGC 02689                     |03h21m27.7s +40d48m06s|G     |   277|    |1992NED11.R......1N|NED measurement is for superimposed star. No other redshift measurement in literature.
+10565106+7742591|CGCG 351-049                  |10h56m51.0s +77d42m59s|G     |   -94|    |1999PASP..111..438F|UZC measurement is for superimposed star. No other redshift measurement in literature.
+12525011-1018361|NGC 4757                      |12h52m50.1s -10d18m37s|G     |   847|    |1992NED11.R......1N|Measurement is for N4753 from 1967AJ.....72..730D. No other redshift measurement in literature.
