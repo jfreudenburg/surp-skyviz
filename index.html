@@ -33,11 +33,11 @@
         center: [-126, 126],
         preferCanvas: true,
     });
-    var 2MRS_0_08_z_0_09_smooth = L.tileLayer("2MRS_0_08_z_0_09_smooth/{z}/{y}/{x}.png", { attribution:"<a href='https://github.com/ryanhausen/fitsmap'>FitsMap</a>",minZoom: 0,maxZoom: 10,maxNativeZoom: 5,}).addTo(map);
+    var twoMRS_0_08_z_0_09_smooth = L.tileLayer("2MRS_0_08_z_0_09_smooth/{z}/{y}/{x}.png", { attribution:"<a href='https://github.com/ryanhausen/fitsmap'>FitsMap</a>",minZoom: 0,maxZoom: 10,maxNativeZoom: 5,}).addTo(map);
 
 
     var baseLayers = {
-        "2MRS_0_08_z_0_09_smooth": 2MRS_0_08_z_0_09_smooth,
+        "2MRS_0_08_z_0_09_smooth": twoMRS_0_08_z_0_09_smooth,
     };
     L.control.layers(baseLayers, {}).addTo(map);
    </script>
