@@ -52,10 +52,23 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
         first to the second coordinate system. (default "G")
 
     norm : {‘hist’, ‘log’, None}
-        Color normalization, hist= histogram equalized color mapping, log= logarithmic color mapping, default: None (linear color mapping)
+        Color normalization, hist= histogram equalized color mapping, log= logarithmic color mapping, 
+        default: None (linear color mapping)
     
     cmap : a color map
         The colormap to use (see matplotlib.cm)
+    
+    Returns
+    -------
+    Creates a directory named as specified by dname. Saves square, axis-free, transparent-background images 
+    of the orthographic projection of map m with edge size in pixels as specified by size parameter. Image names 
+    correspond to projection centers as follows:
+    North Pole     - (0,90)
+    South Pole     - (0,-90)
+    Prime Meridian - (0,0)
+    Antimeridian   - (180,0)
+    Off-axis       - (45,45)
+    Anti-off-axis  - (215,-45)
 
     """
     
