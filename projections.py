@@ -10,6 +10,22 @@ import matplotlib.pyplot as plt
 import matplotlib
 from mycmap import get_continuous_cmap
 
+def histeq(im,nbr_bins=256):
+   # adapted from 
+   # https://web.archive.org/web/20151219221513/http://www.janeriksolem.net/2009/06/histogram-equalization-with-python-and.html
+
+   #get image histogram
+   infmask = im==-np.inf
+   imhist,bins = np.histogram(im.flatten(),nbr_bins,density=True,range=(0,im.max()))
+   cdf = imhist.cumsum() #cumulative distribution function
+   cdf = 255 * cdf / cdf[-1] #normalize
+
+   #use linear interpolation of cdf to find new pixel values
+   im2 = np.interp(im.flatten(),bins[:-1],cdf).reshape(im.shape)
+   im2[infmask] = np.nan
+
+   return im2, cdf
+
 def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist'):
     """
     Generate a set of 6 square, unpadded orthographic projections of a 
@@ -66,23 +82,37 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
               ('offaxis','antioffaxis')]
 
     for i,rot in enumerate(centers):
-        image = hp.orthview(m,rot=rot,xsize=2*size,coord=coord,return_projected_map=True,cmap=cmap,norm=norm,min=0)
-        vmin = 0
-        vmax = np.max(image)
+        image_linear = hp.orthview(m,rot=rot,xsize=2*size,coord=coord,return_projected_map=True,cmap=cmap,norm=norm,min=0)
         
-        fig,axis = plt.subplots(1,1)
-        axis.imshow(image[:,:size],vmin=vmin,vmax=vmax)
-        plt.axis("off")
-        plt.savefig(dirname+'/'+fnames[i][0]+'.png',format='png',transparent=True)
+        # renormalize with histogram equalization
+        image,_ = histeq(image_linear)
+        vmin = 0
+        vmax = np.max(image[~np.isnan(image)])
+        
+        #fig,axis = plt.subplots(1,1)
+        #axis.imshow(image[:,:size],vmin=vmin,vmax=vmax,cmap=cmap)
+        #plt.axis("off")
+        #plt.savefig(dirname+'/'+fnames[i][0]+'.png',format='png',transparent=True)
+        plt.imsave(fname=dirname+'/'+fnames[i][0]+'.png',
+                   arr=image[:,:size],
+                   vmin=vmin,
+                   vmax=vmax,
+                   origin='lower',
+                   cmap=cmap,
+                   format='png')
 
-        del fig,axis
+        #fig,axis = plt.subplots(1,1)
+        #axis.imshow(image[:,size:],vmin=vmin,vmax=vmax,cmap=cmap)
+        #plt.axis("off")
+        #plt.savefig(dirname+'/'+fnames[i][1]+'.png',format='png',transparent=True)
+        plt.imsave(fname=dirname+'/'+fnames[i][1]+'.png',
+                   arr=image[:,size:],
+                   vmin=vmin,
+                   vmax=vmax,
+                   origin='lower',
+                   cmap=cmap,
+                   format='png')
 
-        fig,axis = plt.subplots(1,1)
-        axis.imshow(image[:,size:],vmin=vmin,vmax=vmax)
-        plt.axis("off")
-        plt.savefig(dirname+'/'+fnames[i][1]+'.png',format='png',transparent=True)
-
-        del fig,axis
 
 if __name__=="__main__":
     lon = 215
