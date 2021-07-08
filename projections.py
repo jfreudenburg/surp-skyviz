@@ -84,15 +84,15 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
     for i,rot in enumerate(centers):
         image_linear = hp.orthview(m,rot=rot,xsize=2*size,coord=coord,return_projected_map=True,cmap=cmap,norm=norm,min=0)
         
-        # renormalize with histogram equalization
-        image,_ = histeq(image_linear)
-        vmin = 0
-        vmax = np.max(image[~np.isnan(image)])
+        if norm=='hist':
+            # renormalize with histogram equalization
+            image,_ = histeq(image_linear)
+            vmin = 0
+            vmax = np.max(image[~np.isnan(image)])
         
-        #fig,axis = plt.subplots(1,1)
-        #axis.imshow(image[:,:size],vmin=vmin,vmax=vmax,cmap=cmap)
-        #plt.axis("off")
-        #plt.savefig(dirname+'/'+fnames[i][0]+'.png',format='png',transparent=True)
+        elif norm=='log':
+            warnings.warn('Log normalization not yet implemented')
+        
         plt.imsave(fname=dirname+'/'+fnames[i][0]+'.png',
                    arr=image[:,:size],
                    vmin=vmin,
@@ -101,10 +101,6 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
                    cmap=cmap,
                    format='png')
 
-        #fig,axis = plt.subplots(1,1)
-        #axis.imshow(image[:,size:],vmin=vmin,vmax=vmax,cmap=cmap)
-        #plt.axis("off")
-        #plt.savefig(dirname+'/'+fnames[i][1]+'.png',format='png',transparent=True)
         plt.imsave(fname=dirname+'/'+fnames[i][1]+'.png',
                    arr=image[:,size:],
                    vmin=vmin,
