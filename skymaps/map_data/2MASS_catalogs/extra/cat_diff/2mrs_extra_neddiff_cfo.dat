@@ -1,0 +1,22 @@
+# The 2MASS Redshift Survey
+# Huchra et al., ApJS, in press
+#
+# http://tdc-www.harvard.edu/2mrs/
+# catalog version 2.4, 2011 Dec 16
+# maintained by Lucas Macri, lmacri@tamu.edu
+#
+# Code "C/F/O": NED entries attributed to 2008ApJ...685.1320C, listed here with 2MRS information or proper bibliographic reference and uncertainty in redshift (when available)
+#
+#2MASS_ID        NED_ID                         RA          DEC        TYPE   NED_CZ  ERR QUAL NED_BIBCODE         2MRS_CZ  ERR CD 2MRS_BIBCODE          COMMENT
+20401346+5059165|2MASX J20401346+5059165       |20h40m13.5s +50d59m17s|G     |  3028|   0|    |2008ApJ...685.1320C|   3028|  58|F |20112MRS.FLWO.0000H / 
+04222658+2717521|UGC 03024                     |04h22m26.6s +27d17m52s|G     |  5236|   0|    |2008ApJ...685.1320C|   5236|  74|O |20112MRS.ZMA..0000H / SAO/TDC spectral archive #T23602 
+04371939+2447120|2MASX J04371939+2447120       |04h37m19.4s +24d47m12s|G     |  5000|   0|    |2008ApJ...685.1320C|   5000| 500|O |20112MRS.Arec.0000H / 
+04395859+2454274|2MASX J04395859+2454274       |04h39m58.6s +24d54m28s|G     |  4000|   0|    |2008ApJ...685.1320C|   4000| 500|O |20112MRS.Arec.0000H / 
+16183236-3723459|2MASX J16183236-3723459       |16h18m32.4s -37d23m46s|G     |  4663|   0|    |2008ApJ...685.1320C|   4718|  96|C |20112MRS.CTIO.0000H / 
+16044114-4139472|ESO 330- G 011                |16h04m41.1s -41d39m47s|G     |  4629|   0|    |2008ApJ...685.1320C|   4629|  53|C |20112MRS.CTIO.0000H / 
+20440241+5043362|2MASX J20440241+5043362       |20h44m02.4s +50d43m36s|G     |  3113|   0|    |2008ApJ...685.1320C|   3113|  24|F |20112MRS.FLWO.0000H / 
+03393937+6527116|2MASX J03393937+6527116       |03h39m39.4s +65d27m12s|G     |  5177|   0|    |2008ApJ...685.1320C|   5177|  37|F |20112MRS.FLWO.0000H / 
+04131853+3819491|2MASX J04131853+3819491       |04h13m18.6s +38d19m49s|G     |  6482|   0|    |2008ApJ...685.1320C|   6482|  22|F |20112MRS.FLWO.0000H / 
+03130062+6752475|2MFGC 02634                   |03h13m00.6s +67d52m48s|G     |  6569|   0|    |2008ApJ...685.1320C|   6569|  32|F |20112MRS.FLWO.0000H / 
+04364743+2449296|2MASX J04364743+2449296       |04h36m47.4s +24d49m30s|G     |  5000|   0|    |2008ApJ...685.1320C|   5000| 500|O |20112MRS.Arec.0000H / 
+17161870-2458491|2MASX J17161870-2458491       |17h16m18.7s -24d58m49s|G     |  8525|   0|    |2008ApJ...685.1320C|   8525|  50|O |2000MNRAS.316..326H / 
