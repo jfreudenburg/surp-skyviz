@@ -208,5 +208,97 @@ circle.bindPopup("I am a circle.");
 
 </script>
 
+
+<p> Testing geoJASON on CRS.Simple: </p>
+<div id="2MRSmap2", style="height: 550px; width: 900px"></div>
+<script>
+    var MRSmap2 = L.map('2MRSmap2', {
+    crs: L.CRS.Simple, // simple square grid, need to finure out some curvy grid
+    minZoom: -5,
+    layers: background
+    });
+
+    var bounds = [[-100, -195], [100, 195]]; 
+    var background = L.imageOverlay('./2MASS_images/LongLat_projected.png', bounds).addTo(MRSmap2);
+    MRSmap2.fitBounds(bounds);
+
+    MRSmap2.setView( [0, 0], 1.25);
+
+    var sunIcon = L.icon({
+    iconUrl: 'misc_images/angrySun.png',
+    iconSize:     [100, 60], // size of the icon
+    iconAnchor:   [50, 30], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+});
+
+function onEachFeature(feature, layer) {
+		var popupContent = "I come from geoJSON. "; //"<p>I started out as a GeoJSON " +
+				// feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+
+		if (feature.properties && feature.properties.popupContent) {
+			popupContent += feature.properties.popupContent;
+		}
+
+		layer.bindPopup(popupContent);
+	}
+
+	// L.geoJSON([bicycleRental, campus], {
+
+	// 	style: function (feature) {
+	// 		return feature.properties && feature.properties.style;
+	// 	},
+
+	// 	onEachFeature: onEachFeature,
+
+	// 	pointToLayer: function (feature, latlng) {
+	// 		return L.circleMarker(latlng, {
+	// 			radius: 8,
+	// 			fillColor: "#ff7800",
+	// 			color: "#000",
+	// 			weight: 1,
+	// 			opacity: 1,
+	// 			fillOpacity: 0.8
+	// 		});
+	// 	}
+	// }).addTo(map);
+
+	// L.geoJSON(freeBus, {
+
+	// 	filter: function (feature, layer) {
+	// 		if (feature.properties) {
+	// 			// If the property "underConstruction" exists and is true, return false (don't render features under construction)
+	// 			return feature.properties.underConstruction !== undefined ? !feature.properties.underConstruction : true;
+	// 		}
+	// 		return false;
+	// 	},
+
+	// 	onEachFeature: onEachFeature
+	// }).addTo(map);
+
+	L.geoJSON(objects, {
+
+		pointToLayer: function (feature, latlng) {
+			return L.marker(latlng, {icon: sunIcon});
+		},
+
+		onEachFeature: onEachFeature
+	}).addTo(MRSmap2);
+
+//     L.marker(L.latLng(90, 0), {icon: sunIcon}).addTo(MRSmap).bindPopup('supposed to be at x: 0, y: 90');
+//     L.marker(L.latLng(20, 50)).addTo(MRSmap).bindPopup('supposed to be at x: 50, y: 20');
+//     L.marker(L.latLng(-60, -30)).addTo(MRSmap).bindPopup('supposed to be at x: -30, y: -60');
+
+//     MRSmap.createPane('made-up surveys')
+//     MRSmap.getPane('made-up surveys').style.zIndex = 550; 
+
+//     var bounds = [[[0, 10], [5, 20], [20, 40], [10, 20], [5, -5]], 
+//                     [[-10, -10], [-10, -20], [-5, -15]]];
+//     var polys = L.polygon(bounds, {color: 'blue'}).addTo(MRSmap);
+
+//     polys.bindPopup("I am a survey footprint!");
+
+
+</script>
+
 </body>
 </html>
