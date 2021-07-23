@@ -209,8 +209,11 @@ circle.bindPopup("I am a circle.");
 </script>
 
 
+
+<!-----------------trying geoJSON objects------------>
 <p> Testing geoJASON on CRS.Simple: </p>
 <script src="test_geoJSON.js" type="text/javascript"></script>
+<script src="des_dr2_footprint-geojson.js" type="text/javascript"></script>
 <div id="2MRSmap2", style="height: 550px; width: 900px"></div>
 <script>
     var MRSmap2 = L.map('2MRSmap2', {
@@ -284,6 +287,14 @@ function onEachFeature(feature, layer) {
 
 		onEachFeature: onEachFeature
 	}).addTo(MRSmap2);
+
+    L.geoJSON(footprints, {
+        onEachFeature: onEachFeature
+    }).addTo(MRSmap2);
+
+    L.geoJSON(des, {
+        onEachFeature: onEachFeature
+    }).addTo(MRSmap2);
 
 //     L.marker(L.latLng(90, 0), {icon: sunIcon}).addTo(MRSmap).bindPopup('supposed to be at x: 0, y: 90');
 //     L.marker(L.latLng(20, 50)).addTo(MRSmap).bindPopup('supposed to be at x: 50, y: 20');
