@@ -20,11 +20,16 @@
     <div id="mapid"></div>
 
     <script>
-        var mymap = L.map('mapid').setView([43.705, -79.40], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {
-            foo: 'bar',
-            attribution: 'This is where the Attribution Goes'
+        var mymap = L.map('mapid', {
+            crs: L.CRS.Simple
+        }).setView([-128, 128], 1);
+        L.tileLayer('tiles/{z}/{x}/{y}.png', {
+            attribution: 'This is where the Attribution Goes',
+            maxZoom: 5,
         }).addTo(mymap);
+
+        var centre_point = L.latLng([-128, 128]);
+        L.marker(centre_point).addTo(mymap);
 
         var popup = L.popup();
 
