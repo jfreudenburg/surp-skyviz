@@ -9,22 +9,54 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 from mycmap import get_continuous_cmap
+from healpy.projaxes import HistEqNorm
 
-def histeq(im,nbr_bins=256):
-   # adapted from 
-   # https://web.archive.org/web/20151219221513/http://www.janeriksolem.net/2009/06/histogram-equalization-with-python-and.html
+def cat2hpx(lon, lat, nside, radec=False):
+    """
+    Convert a catalogue to a HEALPix map of number counts per resolution
+    element.
 
-   #get image histogram
-   infmask = im==-np.inf
-   imhist,bins = np.histogram(im.flatten(),nbr_bins,density=True,range=(0,im.max()))
-   cdf = imhist.cumsum() #cumulative distribution function
-   cdf = 255 * cdf / cdf[-1] #normalize
+    Parameters
+    ----------
+    lon, lat : (ndarray, ndarray)
+        Coordinates of the sources in degree. If radec=True, assume input is in the icrs
+        coordinate system. Otherwise assume input is glon, glat
 
-   #use linear interpolation of cdf to find new pixel values
-   im2 = np.interp(im.flatten(),bins[:-1],cdf).reshape(im.shape)
-   im2[infmask] = np.nan
+    nside : int
+        HEALPix nside of the target map
 
-   return im2, cdf
+    radec : bool
+        Switch between R.A./Dec and glon/glat as input coordinate system.
+
+    Return
+    ------
+    hpx_map : ndarray
+        HEALPix map of the catalogue number counts in Galactic coordinates
+
+    """
+
+    npix = hp.nside2npix(nside)
+
+    if radec:
+        eq = SkyCoord(lon, lat, frame='icrs', unit='deg')
+        l, b = eq.galactic.l.value, eq.galactic.b.value
+    else:
+        l, b = lon, lat
+
+    # conver to theta, phi
+    theta = np.radians(90. - b)
+    phi = np.radians(l)
+
+    # convert to HEALPix indices
+    indices = hp.ang2pix(nside, theta, phi)
+
+    idx, counts = np.unique(indices, return_counts=True)
+
+    # fill the fullsky map
+    hpx_map = np.zeros(npix, dtype=int)
+    hpx_map[idx] = counts
+
+    return hpx_map
 
 def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist'):
     """
@@ -71,7 +103,6 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
     Anti-off-axis  - (215,-45)
 
     """
-    
     # Check whether size is power of 2
     if not np.ceil(np.log2(size))==np.log2(size):
         warnings.warn("Image size is not a power of 2")
@@ -95,33 +126,28 @@ def generate_projection_set(m,size,dname,coord=['G'],cmap='viridis',norm='hist')
               ('offaxis','antioffaxis')]
 
     for i,rot in enumerate(centers):
-        image_linear = hp.orthview(m,rot=rot,xsize=2*size,coord=coord,return_projected_map=True,cmap=cmap,norm=norm,min=0)
+        img = hp.orthview(m,rot=rot,xsize=2*size,coord=coord,return_projected_map=True,cmap=cmap,norm=norm,min=0)
+        img[img==-np.inf] = np.nan
+        vmin = 0
+        vmax = img[~np.isnan(img)].max()
         
         if norm=='hist':
-            # renormalize with histogram equalization
-            image,_ = histeq(image_linear)
-            vmin = 0
-            vmax = np.max(image[~np.isnan(image)])
+           normalized = HistEqNorm(vmin=vmin,vmax=vmax)
         
         elif norm=='log':
             warnings.warn('Log normalization not yet implemented')
         
         plt.imsave(fname=dirname+'/'+fnames[i][0]+'.png',
-                   arr=image[:,:size],
-                   vmin=vmin,
-                   vmax=vmax,
+                   arr=cmap(normalized(img[:,:size])),
                    origin='lower',
-                   cmap=cmap,
                    format='png')
+                   #pil_kwargs={'bits':11,'compress_level':0})
 
         plt.imsave(fname=dirname+'/'+fnames[i][1]+'.png',
-                   arr=image[:,size:],
-                   vmin=vmin,
-                   vmax=vmax,
+                   arr=cmap(normalized(img[:,size:])),
                    origin='lower',
-                   cmap=cmap,
                    format='png')
-
+                   #pil_kwargs={'bits':11,'compress_level':0})
 
 if __name__=="__main__":
     lon = 215

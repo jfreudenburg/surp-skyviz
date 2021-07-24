@@ -44,7 +44,7 @@ def get_continuous_cmap(hex_list, float_list=None):
     for num, col in enumerate(['red', 'green', 'blue']):
         col_list = [[float_list[i], rgb_list[i][num], rgb_list[i][num]] for i in range(len(float_list))]
         cdict[col] = col_list
-    cmp = mcolors.LinearSegmentedColormap('my_cmp', segmentdata=cdict, N=256)
+    cmp = mcolors.LinearSegmentedColormap('my_cmp', segmentdata=cdict, N=2048)
     return cmp
 
 mauve = get_continuous_cmap(['1E252A',
@@ -86,30 +86,7 @@ purples = get_continuous_cmap(['18133A',
                                'CBB1CD',
                                'DCCDDF'])
 
-greens = get_continuous_cmap(['#083428', 
-                              '#0e4539', 
-                              '#14564b', 
-                              '#176760', 
-                              '#16787c', 
-                              '#148a99', 
-                              '#0eab95', 
-                              '#07d582', 
-                              '#00ff6e'])
-
-blues = get_continuous_cmap(['#010e3d', 
-                             '#011640', 
-                             '#001d44', 
-                             '#002547', 
-                             '#002c49', 
-                             '#00314b', 
-                             '#00364c', 
-                             '#003b4d', 
-                             '#005663', 
-                             '#007b84', 
-                             '#00a0a5', 
-                             '#00c5c6'])
-
-sunset = get_continuous_cmap(['#221155', 
+sunset = get_continuous_cmap(['#010e3d',
                               '#412156', 
                               '#593256', 
                               '#704356', 
@@ -138,15 +115,47 @@ hotpink = get_continuous_cmap(['150070',
                                'F6A4FF',
                                'F5BEFF'])
 
-lf = get_continuous_cmap(['#010052', 
-                          '#27015d', 
-                          '#410066', 
-                          '#59016f', 
-                          '#700575', 
-                          '#870e79', 
-                          '#9e187b', 
-                          '#b42479', 
-                          '#ca3273', 
-                          '#de4166', 
-                          '#f0534e', 
-                          '#fc6a13'])
+gals = get_continuous_cmap(['#010e3d', 
+                            '#011640', 
+                            '#001d44', 
+                            '#002547', 
+                            '#002c49', 
+                            '#00314b', 
+                            '#00364c', 
+                            '#003b4d', 
+                            '#005663', 
+                            '#007b84', 
+                            '#00a0a5', 
+                            '#00c5c6'])
+
+cmb = get_continuous_cmap(['#010e3d',
+                           '#27015d', 
+                           '#410066', 
+                           '#59016f', 
+                           '#700575', 
+                           '#870e79', 
+                           '#9e187b', 
+                           '#b42479', 
+                           '#ca3273', 
+                           '#de4166', 
+                           '#f0534e', 
+                           '#fc6a13'])
+
+h1 = get_continuous_cmap(['#010e3d', #083428
+                          '#0e4539', 
+                          '#14564b', 
+                          '#176760', 
+                          '#16787c', 
+                          '#148a99', 
+                          '#0eab95', 
+                          '#07d582', 
+                          '#00ff6e'])
+                          
+dust = get_continuous_cmap(['#010e3d', 
+                            '#2c0e4e', 
+                            '#530848', 
+                            '#73023d', 
+                            '#8f0030', 
+                            '#ab0023', 
+                            '#c60016', 
+                            '#e30007'])
