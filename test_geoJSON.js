@@ -53,11 +53,11 @@ var objects = {
         {
             "type": "Feature",
             "properties": {
-                "popupContent": "supposed to be at x: 0, y: 90"
+                "popupContent": "supposed to be at x: 50, y: 20"
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [90, 0]
+                "coordinates": [50, 20] // in geoJSON it's [x, y] while in leaflet it's (y, x)=latlng
             }
         },{
             "type": "Feature",
@@ -67,6 +67,15 @@ var objects = {
             "geometry": {
                 "type": "Point",
                 "coordinates": [0, 0]
+            }
+        },{
+            "type": "Feature",
+            "properties": {
+                "popupContent": "supposd to be at x: -90, y: -40"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-90, -40]
             }
         }
     ]
