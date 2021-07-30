@@ -44,8 +44,8 @@ function onEachFeature(feature, layer) {
 
 L.geoJSON(objects, {
 		pointToLayer: function (feature, latlng) {
-            const ortho = latlng_to_orthographic(latlng[0], latlng[1], 1, 90, 0);
-			return L.marker(L.latlng(ortho[0], ortho[1])); 
+            const ortho = latlng_to_orthographic(latlng.lat, latlng.lng, 1, 90, 0);
+			return L.marker(L.latLng(ortho[0], ortho[1])); 
             // return L.marker(latlng);
 		},
 		onEachFeature: onEachFeature
