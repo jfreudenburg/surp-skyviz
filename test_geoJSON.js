@@ -62,7 +62,7 @@ var objects = {
         },{
             "type": "Feature",
             "properties": {
-                "popupContent": "supposed to be at x: 0, y: 0"
+                "popupContent": "supposed to be at lng: 0, lat: 0"
             },
             "geometry": {
                 "type": "Point",
@@ -71,11 +71,29 @@ var objects = {
         },{
             "type": "Feature",
             "properties": {
-                "popupContent": "supposd to be at x: -90, y: -40"
+                "popupContent": "supposd to be at lng: -90, lat: -40"
             },
             "geometry": {
                 "type": "Point",
                 "coordinates": [-90, -40]
+            }
+        },{
+            "type": "Feature",
+            "properties": {
+                "popupContent": "supposd to be at lng: 0, lat: 90"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [0, 90]
+            }
+        },{
+            "type": "Feature",
+            "properties": {
+                "popupContent": "supposd to be at lng: 90, lat: 50"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [50, 90]
             }
         }
     ]
