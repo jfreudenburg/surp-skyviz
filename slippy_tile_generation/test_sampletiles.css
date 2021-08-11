@@ -1,0 +1,12 @@
+body {
+    padding: 0;
+}
+
+#mapid {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    /* height: 256px; */
+    width: 100vw;
+}
